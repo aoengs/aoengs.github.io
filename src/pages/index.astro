@@ -18,37 +18,37 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				<p class="text-xl text-gray-600">在这里探索、学习、分享</p>
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
 				<!-- 博客卡片 -->
-				<div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+				<div class="break-inside-avoid bg-[#f0f7ff] rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
 					<h2 class="text-2xl font-bold mb-4">📝 博客文章</h2>
 					<p class="text-gray-600 mb-4">查看我的最新博客文章和技术分享</p>
 					<a href="/blog" class="text-blue-500 hover:text-blue-700">浏览文章 →</a>
 				</div>
 
 				<!-- 项目展示 -->
-				<div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+				<div class="break-inside-avoid bg-[#fff0f0] rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
 					<h2 class="text-2xl font-bold mb-4">💻 项目展示</h2>
 					<p class="text-gray-600 mb-4">探索我的开源项目和作品集</p>
 					<a href="/projects" class="text-blue-500 hover:text-blue-700">查看项目 →</a>
 				</div>
 
 				<!-- 关于我 -->
-				<div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+				<div class="break-inside-avoid bg-[#f0fff0] rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
 					<h2 class="text-2xl font-bold mb-4">👋 关于我</h2>
 					<p class="text-gray-600 mb-4">了解更多关于我的故事和经历</p>
 					<a href="/about" class="text-blue-500 hover:text-blue-700">了解更多 →</a>
 				</div>
-			</div>
 
-			<div class="mt-12 text-center">
-				<h3 class="text-2xl font-bold mb-6">最新动态</h3>
-				<div class="space-y-4">
-					<a href="#" class="block bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors">
-						<span class="text-gray-400 text-sm">2024-03-20</span>
-						<p class="text-gray-800">最新博客文章：如何使用 Astro 构建现代网站</p>
-					</a>
-					<!-- 可以添加更多动态 -->
+				<!-- 最新动态卡片 -->
+				<div class="break-inside-avoid bg-[#fff7f0] rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+					<h3 class="text-2xl font-bold mb-6">最新动态</h3>
+					<div class="space-y-4">
+						<a href="#" class="block bg-white/50 rounded-lg p-4 hover:bg-white/70 transition-colors">
+							<span class="text-gray-400 text-sm">2024-03-20</span>
+							<p class="text-gray-800">最新博客文章：如何使用 Astro 构建现代网站</p>
+						</a>
+					</div>
 				</div>
 			</div>
 		</main>
