@@ -1,67 +1,101 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import '../styles/launchpad.css';
+import LaunchpadGrid from '../components/LaunchpadGrid.astro';
+
+// 应用数据
+const apps = [
+    { name: "Safari", icon: "🌐" },
+    { name: "邮件", icon: "✉️" },
+    { name: "日历", icon: "📅" },
+    { name: "备忘录", icon: "📝" },
+    { name: "照片", icon: "🖼️" },
+    { name: "信息", icon: "💬" },
+    { name: "地图", icon: "🗺️" },
+    { name: "音乐", icon: "🎵" },
+    { name: "App Store", icon: "🏪" },
+    { name: "设置", icon: "⚙️" },
+    { name: "时钟", icon: "⏰" },
+    { name: "计算器", icon: "🧮" },
+    { name: "天气", icon: "🌤️" },
+    { name: "提醒事项", icon: "📋" },
+    { name: "FaceTime", icon: "📱" },
+    { name: "图书", icon: "📚" },
+    { name: "播客", icon: "🎙️" },
+    { name: "股市", icon: "📈" },
+    { name: "家庭", icon: "🏠" },
+    { name: "查找", icon: "🔍" },
+    { name: "终端", icon: "⌨️" },
+    { name: "预览", icon: "👁️" },
+    { name: "Numbers", icon: "📊" },
+    { name: "Pages", icon: "📄" },
+    { name: "Keynote", icon: "🎭" },
+    { name: "GarageBand", icon: "🎸" },
+    { name: "iMovie", icon: "🎬" },
+    { name: "启动台", icon: "⭐" }
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🥳 I'm Aoengs!</h1>
-			<!-- 🧑‍🚀🏓 -->
-			<p>
-				
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>macOS 启动台</title>
+</head>
+<body>
+    <div class="launchpad">
+        <div class="search-box">
+            <input type="text" placeholder="搜索应用" id="searchInput">
+        </div>
+        <LaunchpadGrid apps={apps} />
+        <script id="appsData" type="application/json">{JSON.stringify(apps)}</script>
+    </div>
+
+    <script define:vars={{ apps }}>
+        const originalApps = apps;
+        const searchInput = document.getElementById('searchInput');
+        const appGrid = document.getElementById('appGrid');
+        const appsDataElement = document.getElementById('appsData');
+
+        // 搜索功能
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const filteredApps = originalApps.filter(app => 
+                    app.name.toLowerCase().includes(searchTerm)
+                );
+                updateGrid(filteredApps);
+            }, 300);
+        });
+
+        function updateGrid(apps) {
+            appGrid.innerHTML = apps.map((app, index) => `
+                <div class="app-item" style="animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.03}s forwards">
+                    <div class="app-icon">${app.icon}</div>
+                    <div class="app-name">${app.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // 点击应用效果
+        appGrid.addEventListener('click', (e) => {
+            const appItem = e.target.closest('.app-item');
+            if (appItem) {
+                const icon = appItem.querySelector('.app-icon');
+                icon.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    icon.style.transform = '';
+                }, 100);
+            }
+        });
+
+        // 防止搜索框失去焦点
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-box')) {
+                searchInput.blur();
+            }
+        });
+    </script>
+</body>
 </html>
