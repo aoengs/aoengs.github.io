@@ -132,10 +132,9 @@ body {
   justify-content: center;
   font-size: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
 }
 
-.app-name {
+/* .app-name {
   color: white;
   font-size: 14px;
   text-align: center;
@@ -144,8 +143,39 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+} */
+/* 设置应用名称容器 */
+.app-name {
+    width: 90px; /* 固定宽度 */
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    margin-top: 8px;
+    font-size: 14px;
+}
+/* 当文本溢出时才显示动画 */
+.app-name:hover {
+    overflow: visible;
 }
 
+/* 文本溢出时的动画效果 */
+.app-name:hover span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 8s linear infinite;
+}
+
+/* 定义跑马灯动画 */
+@keyframes marquee {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
 /* 动画 */
 @keyframes fadeIn {
   from {
