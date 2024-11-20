@@ -2,15 +2,23 @@
 const { apps } = Astro.props;
 ---
 
-<div class="app-grid" id="appGrid">
+<!-- <div class="app-grid" id="appGrid">
     {apps.map((app, index) => (
         <div class="app-item" style={`animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.03}s forwards`}>
             <div class="app-icon">{app.icon}</div>
             <div class="app-name">{app.name}</div>
         </div>
     ))}
-</div>
+</div> -->
 
+<div id="appGrid" class="app-grid">
+    {apps.map((app) => (
+        <a href={app.url} target="_blank" class="app-item">
+             <div class="app-icon">{app.icon}</div>
+             <div class="app-name">{app.name}</div>
+        </a>
+    ))}
+</div>
 <!-- 存储原始数据用于搜索 -->
 <script id="appsData" type="application/json">
     {JSON.stringify(apps)}
