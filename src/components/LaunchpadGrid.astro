@@ -1,25 +1,139 @@
 ---
+interface Props {
+    apps: Array<{
+        name: string;
+        icon: string;
+        url: string;
+        category: string;
+        desc: string;
+    }>;
+}
+
 const { apps } = Astro.props;
 ---
 
-<!-- <div class="app-grid" id="appGrid">
-    {apps.map((app, index) => (
-        <div class="app-item" style={`animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.03}s forwards`}>
-            <div class="app-icon">{app.icon}</div>
-            <div class="app-name">{app.name}</div>
-        </div>
-    ))}
-</div> -->
-
-<div id="appGrid" class="app-grid">
+<div class="app-grid" id="appGrid">
     {apps.map((app) => (
-        <a href={app.url} target="_blank" class="app-item">
-             <div class="app-icon">{app.icon}</div>
-             <div class="app-name">{app.name}</div>
+        <a 
+            href={app.url}
+            target="_blank"
+            class="app-item"
+            data-category={app.category}
+        >
+            <div class="app-icon">{app.icon}</div>
+            <div class="app-content">
+                <div class="app-name">
+                    <span>{app.name}</span>
+                </div>
+                <div class="app-desc">{app.desc}</div>
+            </div>
+            {/* <div class="app-hover">
+                <span class="hover-text">立即使用</span>
+            </div> */}
         </a>
     ))}
 </div>
-<!-- 存储原始数据用于搜索 -->
-<script id="appsData" type="application/json">
-    {JSON.stringify(apps)}
-</script>
+
+<style>
+    .app-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+        padding: 20px 0;
+    }
+
+    .app-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #f0f0f0, #ffffff);
+        border-radius: 15px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .app-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        border-color: #002FA8;
+    }
+
+    .app-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 25px;
+        background: #002FA8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-right: 15px;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .app-content {
+        flex: 1;
+    }
+
+    .app-name {
+        font-size: 18px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .app-desc {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .app-hover {
+        position: absolute;
+        right: -100%;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(52, 152, 219, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        opacity: 0;
+    }
+
+    .app-item:hover .app-hover {
+        right: 0;
+        opacity: 1;
+    }
+
+    .hover-text {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 10px 25px;
+        border: 2px solid #fff;
+        border-radius: 25px;
+    }
+
+    .app-item:hover .app-icon {
+        transform: rotate(360deg);
+    }
+
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+</style>

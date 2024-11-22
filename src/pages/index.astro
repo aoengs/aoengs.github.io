@@ -1,38 +1,7 @@
 ---
-import '../styles/launchpad.css';
+import '../styles/global.css';
 import LaunchpadGrid from '../components/LaunchpadGrid.astro';
-
-// 应用数据
-const apps = [
-    { name: "奇迹秀", icon: "🐸",url:"https://www.qijishow.com/down/index.html" },
-    { name: "unsplash", icon: "🐝" ,url:"https://unsplash.com/"},
-    { name: "astro", icon: "🦆" ,url:"https://astro.build/" },
-    { name: "iconfont", icon: "🐤" ,url:"https://www.iconfont.cn/"},
-    { name: "unDraw", icon: "🥳" ,url:"https://undraw.co/"},
-    { name: "ollama", icon: "🐥" ,url:"https://github.com/ollama/ollama"},
-    { name: "待更新", icon: "🧣" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🧶" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🎅" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🏓" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🤡" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🐶" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🦄" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🐵" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🎱" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🦋" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🦁" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🥸" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🤓" ,url:"https://www.qijishow.com/down/index.html" },
-    { name: "待更新", icon: "🤶" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "👑" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "👓" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🥽" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🐹" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🦊",url:"https://www.qijishow.com/down/index.html" },
-    { name: "待更新", icon: "🐽" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🐣" ,url:"https://www.qijishow.com/down/index.html"},
-    { name: "待更新", icon: "🐞" ,url:"https://www.qijishow.com/down/index.html"}
-];
+import { apps, categories } from '../data/apps';
 ---
 
 <html lang="zh-CN">
@@ -40,65 +9,173 @@ const apps = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aoengs 启动台</title>
+    <style>
+        /* 跟随鼠标的圆点样式 */
+        .mouse-dot {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background-color:rgba(0,0,0,0.05);
+            border-radius: 50%;
+            pointer-events: none; /* 确保圆点不影响鼠标事件 */
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: transform 0.1s ease-out; 
+        }
+    </style>
 </head>
 <body>
-    <div class="launchpad">
-        <div class="search-box">
-            <input type="text" placeholder="搜索应用" id="searchInput">
+    <div class="app-container">
+        <nav class="sidebar">
+            <ul class="category-list">
+                {categories.map(category => (
+                    <li>
+                        <button 
+                            class="category-btn" 
+                            data-category={category.id}
+                        >
+                            <span class="category-icon">{category.icon}</span>
+                            {category.name}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+        <div class="main-content">
+            <div class="search-box">
+                <span class="icon"></span>
+                <input type="text" placeholder="立即搜索" id="searchInput">
+            </div>
+            <LaunchpadGrid apps={apps} />
         </div>
-        <LaunchpadGrid apps={apps} />
-        <script id="appsData" type="application/json">{JSON.stringify(apps)}</script>
     </div>
 
-    <script define:vars={{ apps }}>
-        const originalApps = apps;
-        const searchInput = document.getElementById('searchInput');
-        const appGrid = document.getElementById('appGrid');
-        const appsDataElement = document.getElementById('appsData');
+    <!-- 跟随鼠标的圆点 -->
+    <div class="mouse-dot"></div>
+
+    <!-- 右侧小卡片 -->
+    <div class="right-cards">
+        <div class="card">
+            <span class="emoji">😀</span>
+            <span class="text">卡片 1</span>
+        </div>
+        <div class="card">
+            <span class="emoji">🌟</span>
+            <span class="text">卡片 2</span>
+        </div>
+        <div class="card" id="scrollToTopCard">
+            <span class="emoji">🚀</span>
+            <span class="text">返回顶部</span>
+        </div>
+    </div>
+
+    <script>
+        // 添加类型断言
+        const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+        const appGrid = document.getElementById('appGrid') as HTMLDivElement;
+        const categoryBtns = document.querySelectorAll<HTMLButtonElement>('.category-btn');
+        const appItems = document.querySelectorAll<HTMLElement>('.app-item');
+        let currentCategory = 'all';
+
+        // 分类切换功能
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 使用可选链和类型断言
+                const category = btn.getAttribute('data-category') || 'all';
+                currentCategory = category;
+                
+                // 更新按钮状态
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 显示/隐藏应用
+                appItems.forEach(item => {
+                    const appCategory = item.getAttribute('data-category');
+                    if (category === 'all' || appCategory === category) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
 
         // 搜索功能
-        let searchTimeout;
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const searchTerm = e.target.value.toLowerCase().trim();
-                const filteredApps = originalApps.filter(app => 
-                    app.name.toLowerCase().includes(searchTerm)
-                );
-                updateGrid(filteredApps);
-            }, 300);
+        searchInput?.addEventListener('input', (e) => {
+            const searchTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
+            
+            appItems.forEach(item => {
+                const nameElement = item.querySelector('.app-name');
+                const name = nameElement ? nameElement.textContent?.toLowerCase() || '' : '';
+                const category = item.getAttribute('data-category') || '';
+                const matchesSearch = name.includes(searchTerm);
+                const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
 
-        function updateGrid(apps) {
-            appGrid.innerHTML = apps.map((app, index) => `
-                <a href="${app.url}" 
-                   target="_blank" 
-                   class="app-item" 
-                   style="animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.03}s forwards">
-                    <div class="app-icon">${app.icon}</div>
-                    <div class="app-name">${app.name}</div>
-                </a>
-            `).join('');
+        // 默认选中"全部应用"
+        const defaultBtn = document.querySelector<HTMLButtonElement>('[data-category="all"]');
+        defaultBtn?.classList.add('active');
+
+        const mouseDot = document.querySelector('.mouse-dot');
+
+        document.addEventListener('mousemove', (event) => {
+            mouseDot.style.left = `${event.clientX}px`;
+            mouseDot.style.top = `${event.clientY}px`;
+        });
+
+        document.addEventListener('click', (event) => {
+            const colors = ['#e74c3c', '#8e44ad', '#3498db', '#1abc9c', '#f1c40f', '#e67e22', '#2ecc71'];
+            const particles = 30; // 粒子数量
+
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${event.clientX}px`;
+                particle.style.top = `${event.clientY}px`;
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                // 随机方向和速度
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 100 + 50; // 粒子爆炸的距离
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+
+                particle.style.setProperty('--x', `${x}px`);
+                particle.style.setProperty('--y', `${y}px`);
+
+                document.body.appendChild(particle);
+
+                // 动画结束后移除粒子
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+        });
+
+        // 确保选择器正确
+        const scrollToTopCard = document.getElementById('scrollToTopCard');
+
+        // 检查是否成功获取到元素
+        if (scrollToTopCard) {
+            scrollToTopCard.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // 平滑滚动效果
+                });
+            });
+        } else {
+            console.error('Element with id "scrollToTopCard" not found.');
         }
 
-        // 点击应用效果
-        appGrid.addEventListener('click', (e) => {
-            const appItem = e.target.closest('.app-item');
-            if (appItem) {
-                const icon = appItem.querySelector('.app-icon');
-                icon.style.transform = 'scale(0.9)';
-                setTimeout(() => {
-                    icon.style.transform = '';
-                }, 100);
-            }
-        });
-
-        // 防止搜索框失去焦点
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.search-box')) {
-                searchInput.blur();
-            }
-        });
+        
     </script>
 </body>
 </html>
