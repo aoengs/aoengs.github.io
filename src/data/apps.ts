@@ -1,13 +1,14 @@
 export const categories = [
-    { id: 'all', name: '全部应用', icon: '🏠' },
+    { id: 'all', name: '全部应用', icon: '🤓' },
     { id: 'creative', name: '创意工具', icon: '🎨' },
     { id: 'design', name: '设计工具', icon: '✏️' },
     { id: 'image', name: '图像处理', icon: '🖼️' },
     { id: 'video', name: '视频制作', icon: '🎥' },
     { id: 'ai', name: 'AI 工具', icon: '🤖' },
     { id: 'github', name: 'Github', icon: '✨' }
+   
 ];
-
+// { id: 'blog', name: ' 我的博客', icon: '✨' }
 export const apps = [
     {
         name: "Photoshop 2024",
