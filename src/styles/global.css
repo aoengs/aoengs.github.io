@@ -114,21 +114,21 @@ body {
 }
 
 /* 搜索框 */
-.search-box {
+/* .search-box {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 250px;
     height: 40px;
-    background-color: #fff;
+    /* background-color: #fff; */
     border-radius: 25px;
     display: flex;
     align-items: center;
     padding: 0 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: none;
-}
+} */
 
 .search-box input {
     width: 100%;
@@ -262,7 +262,7 @@ body::-webkit-scrollbar-thumb:hover {
     right:  0;
     top: 10px; /* 距离页面顶部10px */
     background-color: #295CE6;
-    border: 1px solid #e0e0e0;
+    /* border: 1px solid #e0e0e0; */
     border-radius: 20px 0px 0px 20px; /* 右侧圆角 */
     padding: 10px;
     z-index: 1001; /* 确保在其他内容之上 */
