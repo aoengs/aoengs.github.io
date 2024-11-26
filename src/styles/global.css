@@ -26,7 +26,10 @@ body {
     transform: translateY(-50%);
     width: 150px;
     background: #ffffff;
-    border-left: 1px solid #e0e0e0;
+    border-left: 0px solid #1e30b7;
+    /* border-right: 2px solid #1229c1; */
+    /* border-top: 80px solid #1229c1;
+    border-bottom: 8px solid #1229c1; */
     box-shadow: 13px 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     border-radius: 10px;
@@ -42,6 +45,7 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
+    
 }
 
 .category-btn {
@@ -57,7 +61,7 @@ body {
     font-size: 14px;
     color: #666;
     transition: all 0.3s ease;
-    border-left: 3px solid transparent;
+    border-left: 0px solid transparent;
     margin: 5px 0;
     position: relative;
     z-index: 1;
@@ -68,7 +72,7 @@ body {
     display: block;
     width: 80%;
     height: 1px;
-    background-color: #e0e0e0;
+    /* background-color: #fbfbfb; */
     margin: 0 auto;
     position: absolute;
     bottom: 0;
@@ -78,13 +82,13 @@ body {
 .category-list li:last-child .category-btn::after {
     display: none;
 }
-
+/* 左侧导航鼠标悬停效果 */
 .category-btn:hover {
     color: var(--primary-color);
     background-color: #f0f7ff;
     transform: translateY(-9px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    z-index: 30;
+    box-shadow: 0 13px 35px rgba(54, 77, 225, 0.5);
+    z-index: 300;
 }
 
 .category-btn.active {

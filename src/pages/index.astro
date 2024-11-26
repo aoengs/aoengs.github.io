@@ -80,13 +80,13 @@ import { apps, categories } from "../data/apps";
 
     <!-- 右侧小卡片 -->
     <div class="right-cards">
-      <div class="card" style="background-color: #1e0ca2;">
+      <div class="card" id="card1" style="background-color: #1e0ca2;">
         <span class="emoji">😀</span>
-        <span class="text" style="color: #fff;">卡片 1</span>
+        <span class="text" style="color: #fff;">联系方式</span>
       </div>
-      <div class="card" style="background-color: #1e0ca2;">
+      <div class="card" id="card2" style="background-color: #1e0ca2;">
         <span class="emoji">🌟</span>
-        <span class="text" style="color: #fff;">卡片 2</span>
+        <span class="text" style="color: #fff;">关于我</span>
       </div>
       <div class="card" id="scrollToTopCard" style="background-color: #1e0ca2;">
         <span class="emoji">🚀</span>
@@ -216,6 +216,22 @@ import { apps, categories } from "../data/apps";
         });
       } else {
         console.error('Element with id "scrollToTopCard" not found.');
+      }
+
+      // 为卡片1添加点击事件
+      const card1 = document.getElementById("card1");
+      if (card1) {
+        card1.addEventListener("click", () => {
+          alert("联系方式：186****1616");
+        });
+      }
+
+      // 为卡片2添加点击事件
+      const card2 = document.getElementById("card2");
+      if (card2) {
+        card2.addEventListener("click", () => {
+          alert("关于我：Aoengs");
+        });
       }
 
       // 确保选择器正确
