@@ -8,9 +8,13 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--bg-color);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     overflow: auto;
+    background-color: var(--bg-color);
+    background-image: 
+        linear-gradient(0deg, transparent 24%, rgb(239, 239, 239) 25%, rgb(239,239,239) 26%, transparent 27%, transparent 74%, rgb(239,239,239) 75%, rgb(239,239,239) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgb(239,239,239) 25%, rgb(239,239,239) 26%, transparent 27%, transparent 74%, rgb(239,239,239) 75%, rgb(239,239,239) 76%, transparent 77%, transparent);
+    background-size: 35px 35px; /* 网格大小 */
 }
 
 .app-container {
