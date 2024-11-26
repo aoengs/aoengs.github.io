@@ -27,9 +27,7 @@ const { apps } = Astro.props;
                 </div>
                 <div class="app-desc">{app.desc}</div>
             </div>
-            {/* <div class="app-hover">
-                <span class="hover-text">立即使用</span>
-            </div> */}
+            <div class="app-category">{app.category}</div>
         </a>
     ))}
 </div>
@@ -136,5 +134,17 @@ const { apps } = Astro.props;
     @keyframes marquee {
         0% { transform: translateX(0); }
         100% { transform: translateX(-100%); }
+    }
+
+    .app-category {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 </style>

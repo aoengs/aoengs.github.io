@@ -22,37 +22,57 @@ import { apps, categories } from "../data/apps";
         z-index: 9999;
         transition: transform 0.1s ease-out;
       }
+
+      /* 添加文本居中样式 */
+      .category-list {
+        list-style: none;
+        padding: 10px;
+        text-align: center; /* 确保列表项中的文本居中 */
+      }
+
+      .category-label {
+        display: block; /* 确保标签占据整个行 */
+        margin: 0 auto; /* 自动左右边距以居中 */
+        color: #000000; /* 保持原有颜色 */
+        margin-bottom: 25px;
+        font-size: 18px;
+        padding: 6px;
+        border-radius: 10px;}
+      /* box-shadow: 0 0 10px #1221cb; */
+      /*border-radius: 20px 20px 20px 20px; */
     </style>
   </head>
   <body style="background-color: #F5F8FA;">
     <div class="app-container">
-        <!-- 左侧搜索框 -->
-        <div class="left-search-box" id="leftSearchBox">
-            <input type="text" placeholder="" id="searchInput" />
-            <span class="search-label" style="font-size: 14px;"> </span>
-        </div>
+      <!-- 左侧搜索框 -->
+      <div class="left-search-box" id="leftSearchBox">
+        <input type="text" placeholder="请输入" id="searchInput" />
+        <span class="search-label" style="font-size: 14px;"> </span>
+      </div>
 
-        <!-- 左侧导航容器 -->
-        <div class="sidebar-wrapper">
-            <nav class="sidebar">
-                <ul class="category-list">
-                    {categories.map(category => (
-                        <li>
-                            <button 
-                                class="category-btn" 
-                                data-category={category.id}
-                            >
-                                {category.name}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        </div>
+      <!-- 左侧导航容器 -->
+      <div class="sidebar-wrapper">
+        <nav class="sidebar">
+          <ul class="category-list">
+            <li>
+              <span class="category-label">工具箱</span>
+            </li>
+            {
+              categories.map((category) => (
+                <li>
+                  <button class="category-btn" data-category={category.id}>
+                    {category.name}
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
 
-        <div class="main-content">
-            <LaunchpadGrid apps={apps} />
-        </div>
+      <div class="main-content">
+        <LaunchpadGrid apps={apps} />
+      </div>
     </div>
 
     <!-- 跟随鼠标的圆点 -->
@@ -211,15 +231,40 @@ import { apps, categories } from "../data/apps";
       }
 
       // 定义一组emoji
-      const emojis = ['😀', '🚀', '🌟', '🎨', '🎉', '📚', '💻','🐶','🦁','🦋','🐱','🐷','🐸','🤡','🤓','🤖','🎯','✏️','🖼️','🎥','✨','🦊','🥳','🎃'];
+      const emojis = [
+        "😀",
+        "🚀",
+        "🌟",
+        "🎨",
+        "🎉",
+        "📚",
+        "💻",
+        "🐶",
+        "🦁",
+        "🦋",
+        "🐱",
+        "🐷",
+        "🐸",
+        "🤡",
+        "🤓",
+        "🤖",
+        "🎯",
+        "✏️",
+        "🖼️",
+        "🎥",
+        "✨",
+        "🦊",
+        "🥳",
+        "🎃",
+      ];
 
       // 获取所有的app-icon元素
-      const appIcons = document.querySelectorAll('.app-icon');
+      const appIcons = document.querySelectorAll(".app-icon");
 
       // 生成随机颜色的函数
       function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
+        const letters = "0123456789ABCDEF";
+        let color = "#";
         for (let i = 0; i < 6; i++) {
           color += letters[Math.floor(Math.random() * 16)];
         }
@@ -227,7 +272,7 @@ import { apps, categories } from "../data/apps";
       }
 
       // 为每个app-icon设置随机emoji和随机背景颜色
-      appIcons.forEach(icon => {
+      appIcons.forEach((icon) => {
         const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
         icon.textContent = randomEmoji; // 设置图标的内容为随机emoji
         icon.style.backgroundColor = getRandomColor(); // 设置随机背景颜色

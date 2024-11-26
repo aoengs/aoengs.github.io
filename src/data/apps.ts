@@ -1,28 +1,28 @@
 export const categories = [
     { id: 'all', name: '全部应用', icon: '🤓' },
-    { id: 'creative', name: '创意工具', icon: '🎨' },
+    { id: 'AI', name: 'AI 工具', icon: '🤖' },
+    { id: 'Web', name: ' 前端开发', icon: '🎨' },
     { id: 'design', name: '设计工具', icon: '✏️' },
     { id: 'image', name: '图像处理', icon: '🖼️' },
     { id: 'video', name: '视频制作', icon: '🎥' },
-    { id: 'ai', name: 'AI 工具', icon: '🤖' },
-    { id: 'github', name: 'Github', icon: '✨' }
+    { id: 'Github', name: 'Github', icon: '✨' } ,
    
 ];
 // { id: 'blog', name: ' 我的博客', icon: '✨' }
 export const apps = [
     {
-        name: "Photoshop 2024",
+        name: "千古前端图文教程",
         icon: "🎨",
-        url: "https://www.adobe.com/products/photoshop.html",
-        category: "creative",
-        desc: "最新PS版本，内置AI功能"
+        url: "https://web.qianguyihao.com/",
+        category: "Web",
+        desc: "从零开始学前端"
     },
     {
-        name: "Stable Diffusion",
+        name: "开发者项目列表",
         icon: "🎯",
-        url: "https://stability.ai/",
-        category: "ai",
-        desc: "开源AI绘画模型，支持本地部署"
+        url: "https://github.com/1c7/chinese-independent-developer",
+        category: "Github",
+        desc: "聚合所有中国独立开发者的项目"
     },
     {
         name: "Unsplash",
@@ -35,288 +35,57 @@ export const apps = [
         name: "ollama",
         icon: "🎯",
         url: "https://github.com/ollama/ollama",
-        category: "github",
+        category: "Github",
         desc: "开源AI模型库"
     },
     {
         name: "Qwerty-Learner",
         icon: "🎯",
         url: "https://github.com/RealKai42/qwerty-learner",
-        category: "github",
+        category: "Github",
         desc: "单词打字练习"
     },
     {
         name: "Moki",
         icon: "🎯",
         url: "https://www.moki.cn/",
-        category: "ai",
+        category: "AI",
         desc: "用 AI 做短视频"
     },
     {
-        name: "Moki",
+        name: "Kimi",
         icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
+        url: "https://kimi.moonshot.cn/",
+        category: "AI",
+        desc: "会推理解析，能深度思考的 AI 助手"
+    },
+    ,
+    {
+        name: "豆包",
+        icon: "🎯",
+        url: "https://www.doubao.com/chat/",
+        category: "AI",
+        desc: "字节跳动旗下 AI 助手"
     },
     {
-        name: "Moki",
+        name: "undraw",
         icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    }, {
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
-    },{
-        name: "Moki",
-        icon: "🎯",
-        url: "https://www.moki.cn/",
-        category: "ai",
-        desc: "用 AI 做短视频"
+        url: "https://undraw.co/illustrations",
+        category: "image",
+        desc: "免费 SVG 插画素材"
     },
-    // ... 添加更多应用
+    {
+        name: "通义千问",
+        icon: "🎯",
+        url: "https://tongyi.aliyun.com/qianwen/",
+        category: "AI",
+        desc: "阿里云出品，支持 AI 编码"
+    },
+    {
+        name: "文心一言",
+        icon: "🎯",
+        url: "https://yiyan.baidu.com",
+        category: "AI",
+        desc: "百度出品，AI 聊天机器人"
+    }
 ]; 
