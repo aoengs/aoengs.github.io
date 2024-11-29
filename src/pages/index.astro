@@ -8,14 +8,15 @@
     <title>个人简介</title>
     <style>
       :root {
-        --primary-color: #2563eb;
+        --primary-color: #1a27db;
         --text-primary: #1a202c;
         --text-secondary: #4a5568;
         --bg-hover: rgba(37, 99, 235, 0.05);
+        --primary-color-rgb: 26, 39, 219;
       }
 
       body {
-        background: #fafafa;
+        background: #ffffff;
         color: var(--text-primary);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       }
@@ -29,6 +30,7 @@
 
       .grid {
         display: grid;
+        margin-top: 35px;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 2rem;
       }
@@ -50,7 +52,32 @@
 
       .card-large {
         grid-column: 1 / -1;
-        padding: 3rem;
+        padding: 3.5rem;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 255, 255, 0.85) 100%
+        );
+      }
+
+      .card-large::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.08) 25%, transparent 25%) -20px 0,
+          linear-gradient(225deg, rgba(var(--primary-color-rgb), 0.08) 25%, transparent 25%) -20px 0,
+          linear-gradient(315deg, rgba(var(--primary-color-rgb), 0.08) 25%, transparent 25%),
+          linear-gradient(45deg, rgba(var(--primary-color-rgb), 0.08) 25%, transparent 25%);
+        background-size: 40px 40px;
+        z-index: 0;
+        opacity: 0.5;
+        animation: gradientMove 30s linear infinite;
       }
 
       .avatar-container {
@@ -58,7 +85,8 @@
         align-items: center;
         gap: 2.5rem;
         margin-bottom: 2rem;
-        
+        position: relative;
+        z-index: 1;
       }
 
       .avatar {
@@ -167,6 +195,38 @@
           gap: 1.5rem;
         }
       }
+
+      .card-large::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 50%
+        );
+        pointer-events: none;
+      }
+
+      .card-large:hover::before {
+        animation-play-state: paused;
+      }
+
+      .card-large:hover {
+        transform: translateY(-2px);
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: -20px 0, -20px 0, 0 0, 0 0;
+        }
+        100% {
+          background-position: -500px 0, -500px 0, -480px 0, -480px 0;
+        }
+      }
     </style>
   </head>
   <body>
@@ -179,7 +239,7 @@
               src="/path/to/your/avatar.jpg" 
               alt="头像" 
               class="avatar"
-              onError="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
+              onError="this.src='https://api.dicebear.com/9.x/thumbs/svg?seed=Brian'"
             />
             <div class="intro-text">
               <h1 class="intro-title">Hi, I'm Bailey</h1>
@@ -193,7 +253,7 @@
         <a href="/navigation" class="card" style="text-decoration: none;">
           <h2 class="section-title">Work</h2>
           <div class="project">
-            <h3 class="project-title">导航工具集</h3>
+            <!-- <h3 class="project-title">导航工具集</h3> -->
             <p class="project-desc">互联网应用导航栏</p>
             <p class="project-desc">集合了常用工具和资源</p>
           </div>
@@ -210,6 +270,13 @@
           <p class="project-desc">期待与您的合作</p>
           <p class="project-desc">Email:haofengshang@gmail.com</p>
         </div>
+        <div class="card">
+          <h2 class="section-title">Contact</h2>
+          <p class="project-desc">期待与您的合作</p>
+          <p class="project-desc">Email:haofengshang@gmail.com</p>
+        </div>
+      
+       
       </div>
     </div>
 
@@ -307,6 +374,23 @@
             });
           });
         });
+
+        // 更新 RGB 变量的函数
+        function updateRGBVariable(color) {
+          // 将十六进制颜色转换为 RGB
+          const hex = color.replace('#', '');
+          const r = parseInt(hex.substring(0, 2), 16);
+          const g = parseInt(hex.substring(2, 4), 16);
+          const b = parseInt(hex.substring(4, 6), 16);
+          document.documentElement.style.setProperty('--primary-color-rgb', `${r}, ${g}, ${b}`);
+        }
+
+        // 在颜色选择器的更新函数中添加
+        function updateColor(e) {
+          // ... 现有代码 ...
+          const newColor = positionToColor(position);
+          updateRGBVariable(newColor);
+        }
       });
     </script>
   </body>

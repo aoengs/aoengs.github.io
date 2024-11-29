@@ -31,6 +31,13 @@ export const apps = [
     desc: "高清图片素材库",
   },
   {
+    name: "Dicebear",
+    icon: "🎯",
+    url: "https://www.dicebear.com/playground/ ",
+    category: "image",
+    desc: "AI 头像生成",
+  },
+  {
     name: "ollama",
     icon: "🎯",
     url: "https://github.com/ollama/ollama",
