@@ -1,298 +1,275 @@
 ---
-import "../styles/global.css";
-import LaunchpadGrid from "../components/LaunchpadGrid.astro";
-import { apps, categories } from "../data/apps";
+// Astro frontmatter
 ---
 
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aoengs 启动台</title>
+    <title>小明的空间</title>
     <style>
-      /* 跟随鼠标的圆点样式 */
-      .mouse-dot {
-        position: fixed;
-        width: 25px;
-        height: 25px;
-        background-color: rgba(0, 0, 0, 0.05);
+      /* 添加 Safari 兼容性样式 */
+      :root {
+        --grid-gap: 1rem;
+        --card-padding: 1.5rem;
+      }
+
+      body {
+        margin: 0;
+        background: #f5f5f5;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--grid-gap);
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.1);
+        padding: var(--card-padding);
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+        will-change: transform;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      /* 添加卡片悬浮效果 */
+      .card:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      /* 优化文字渲染 */
+      .card h1, .card h2, .card p {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* 防止文字抖动 */
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+      }
+
+      /* 添加卡片内容容器 */
+      .card-content {
+        position: relative;
+        z-index: 1;
+        transform: translateZ(0);
+      }
+
+      .card-large {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .card-medium {
+        grid-column: span 2;
+      }
+
+      .intro-title {
+        font-size: 2.5rem;
+        margin: 0 0 1rem 0;
+        font-weight: 600;
+      }
+
+      .intro-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      .project-title {
+        font-size: 1.5rem;
+        margin: 0 0 0.5rem 0;
+      }
+
+      .project-desc {
+        color: #666;
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: contents;
+      }
+
+      /* 头像容器样式 */
+      .avatar-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      /* 头像样式 */
+      .avatar {
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
-        pointer-events: none; /* 确保圆点不影响鼠标事件 */
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        transition: transform 0.1s ease-out;
+        border: 3px solid #fff; /* 白色内边框 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        object-fit: cover;
+        margin-right: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
-      /* 添加文本居中样式 */
-      .category-list {
-        list-style: none;
-        padding: 10px;
-        text-align: center; /* 确保列表项中的文本居中 */
+      /* 头像悬浮效果 */
+      .avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 4px #0f33bf; /* 悬浮时边框颜色变浅 */
       }
 
-      .category-label {
-        display: block; /* 确保标签占据整个行 */
-        margin: 0 auto; /* 自动左右边距以居中 */
-        color: #000000; /* 保持原有颜色 */
-        margin-bottom: 25px;
-        font-size: 18px;
-        padding: 6px;
-        border-radius: 10px;}
-      /* box-shadow: 0 0 10px #1221cb; */
-      /*border-radius: 20px 20px 20px 20px; */
+      /* 文字区域样式 */
+      .intro-text {
+        flex: 1;
+      }
+
+      .intro-title {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      .intro-subtitle {
+        margin: 8px 0 0 0;
+        color: #4a5568;
+        font-size: 1.1rem;
+      }
     </style>
-  </head>
-  <body style="background-color: #F5F8FA;">
-    <div class="app-container">
-      <!-- 左侧搜索框 -->
-      <div class="left-search-box" id="leftSearchBox">
-        <input type="text" placeholder="请输入" id="searchInput" />
-        <span class="search-label" style="font-size: 14px;"> </span>
-      </div>
+    <script type="module">
+      import { animate, spring } from 'https://cdn.skypack.dev/@motionone/dom';
 
-      <!-- 左侧导航容器 -->
-      <div class="sidebar-wrapper">
-        <nav class="sidebar">
-          <ul class="category-list">
-            <li>
-              <span class="category-label">工具箱</span>
-            </li>
-            {
-              categories.map((category) => (
-                <li>
-                  <button class="category-btn" data-category={category.id}>
-                    {category.name}
-                  </button>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
+      document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+          // 悬浮动画效果
+          card.addEventListener('mouseenter', () => {
+            animate(card, {
+              scale: 1.02,
+              y: -5,
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)'
+            }, {
+              duration: 0.3,
+              easing: spring({ stiffness: 300, damping: 20 })
+            });
+          });
 
-      <div class="main-content">
-        <LaunchpadGrid apps={apps} />
-      </div>
-    </div>
+          // 移走时立即恢复原状
+          card.addEventListener('mouseleave', () => {
+            animate(card, {
+              scale: 1,
+              y: 0,
+              rotateX: 0,  // 确保旋转角度归零
+              rotateY: 0,  // 确保旋转角度归零
+              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)'
+            }, {
+              duration: 0.3,
+              easing: spring({ stiffness: 400, damping: 30 }) // 增加弹簧刚度和阻尼
+            });
+          });
 
-    <!-- 跟随鼠标的圆点 -->
-    <div class="mouse-dot"></div>
+          // 鼠标移动时的倾斜效果
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
 
-    <!-- 右侧小卡片 -->
-    <div class="right-cards">
-      <div class="card" id="card1" style="background-color: #1e0ca2;">
-        <span class="emoji">😀</span>
-        <span class="text" style="color: #fff;">联系方式</span>
-      </div>
-      <div class="card" id="card2" style="background-color: #1e0ca2;">
-        <span class="emoji">🌟</span>
-        <span class="text" style="color: #fff;">关于我</span>
-      </div>
-      <div class="card" id="scrollToTopCard" style="background-color: #1e0ca2;">
-        <span class="emoji">🚀</span>
-        <span class="text" style="color: #fff;">返回顶部</span>
-      </div>
-    </div>
-
-    <script>
-      // 添加类型断言
-      const searchInput = document.getElementById(
-        "searchInput"
-      ) as HTMLInputElement;
-      const appGrid = document.getElementById("appGrid") as HTMLDivElement;
-      const categoryBtns =
-        document.querySelectorAll<HTMLButtonElement>(".category-btn");
-      const appItems = document.querySelectorAll<HTMLElement>(".app-item");
-      let currentCategory = "all";
-
-      // 分类切换功能
-      categoryBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          // 使用可选链和类型断言
-          const category = btn.getAttribute("data-category") || "all";
-          currentCategory = category;
-
-          // 更新按钮状态
-          categoryBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          // 显示/隐藏应用
-          appItems.forEach((item) => {
-            const appCategory = item.getAttribute("data-category");
-            if (category === "all" || appCategory === category) {
-              item.style.display = "flex";
-            } else {
-              item.style.display = "none";
-            }
+            animate(card, {
+              rotateX,
+              rotateY,
+            }, { 
+              duration: 0.1,
+              easing: [0.2, 0.2, 0.2, 1]
+            });
           });
         });
-      });
 
-      // 搜索功能
-      searchInput?.addEventListener("input", (e) => {
-        const searchTerm = (e.target as HTMLInputElement).value
-          .toLowerCase()
-          .trim();
-
-        appItems.forEach((item) => {
-          const nameElement = item.querySelector(".app-name");
-          const name = nameElement
-            ? nameElement.textContent?.toLowerCase() || ""
-            : "";
-          const category = item.getAttribute("data-category") || "";
-          const matchesSearch = name.includes(searchTerm);
-          const matchesCategory =
-            currentCategory === "all" || category === currentCategory;
-
-          if (matchesSearch && matchesCategory) {
-            item.style.display = "flex";
-          } else {
-            item.style.display = "none";
-          }
-        });
-      });
-
-      // 默认选中"全部应用"
-      const defaultBtn = document.querySelector<HTMLButtonElement>(
-        '[data-category="all"]'
-      );
-      defaultBtn?.classList.add("active");
-
-      const mouseDot = document.querySelector(".mouse-dot");
-
-      document.addEventListener("mousemove", (event) => {
-        mouseDot.style.left = `${event.clientX}px`;
-        mouseDot.style.top = `${event.clientY}px`;
-      });
-
-      document.addEventListener("click", (event) => {
-        const colors = [
-          "#e74c3c",
-          "#8e44ad",
-          "#3498db",
-          "#1abc9c",
-          "#f1c40f",
-          "#e67e22",
-          "#2ecc71",
-        ];
-        const particles = 30; // 粒子数量
-
-        for (let i = 0; i < particles; i++) {
-          const particle = document.createElement("div");
-          particle.className = "particle";
-          particle.style.left = `${event.clientX}px`;
-          particle.style.top = `${event.clientY}px`;
-          particle.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
-
-          // 随机方向和速度
-          const angle = Math.random() * 2 * Math.PI;
-          const distance = Math.random() * 100 + 50; // 粒子爆炸的距离
-          const x = Math.cos(angle) * distance;
-          const y = Math.sin(angle) * distance;
-
-          particle.style.setProperty("--x", `${x}px`);
-          particle.style.setProperty("--y", `${y}px`);
-
-          document.body.appendChild(particle);
-
-          // 动画结束后移除粒子
-          particle.addEventListener("animationend", () => {
-            particle.remove();
+        // 导航卡片特殊处理
+        const navigationCard = document.querySelector('.card[data-type="navigation"]');
+        if (navigationCard) {
+          navigationCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/navigation';
           });
         }
-      });
-
-      // 确保选择器正确
-      const scrollToTopCard = document.getElementById("scrollToTopCard");
-
-      // 检查是否成功获取到元素
-      if (scrollToTopCard) {
-        scrollToTopCard.addEventListener("click", () => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth", // 平滑滚动效果
-          });
-        });
-      } else {
-        console.error('Element with id "scrollToTopCard" not found.');
-      }
-
-      // 为卡片1添加点击事件
-      const card1 = document.getElementById("card1");
-      if (card1) {
-        card1.addEventListener("click", () => {
-          alert("联系方式：186****1616");
-        });
-      }
-
-      // 为卡片2添加点击事件
-      const card2 = document.getElementById("card2");
-      if (card2) {
-        card2.addEventListener("click", () => {
-          alert("关于我：Aoengs");
-        });
-      }
-
-      // 确保选择器正确
-      const blogButton = document.getElementById("blogButton");
-
-      // 检查是否成功获取到元素
-      if (blogButton) {
-        blogButton.addEventListener("click", () => {
-          window.location.href = "/about"; // 跳转到 about.astro 页面
-        });
-      } else {
-        console.error("Blog button not found.");
-      }
-
-      // 定义一组emoji
-      const emojis = [
-        "😀",
-        "🚀",
-        "🌟",
-        "🎨",
-        "🎉",
-        "📚",
-        "💻",
-        "🐶",
-        "🦁",
-        "🦋",
-        "🐱",
-        "🐷",
-        "🐸",
-        "🤡",
-        "🤓",
-        "🤖",
-        "🎯",
-        "✏️",
-        "🖼️",
-        "🎥",
-        "✨",
-        "🦊",
-        "🥳",
-        "🎃",
-      ];
-
-      // 获取所有的app-icon元素
-      const appIcons = document.querySelectorAll(".app-icon");
-
-      // 生成随机颜色的函数
-      function getRandomColor() {
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-      }
-
-      // 为每个app-icon设置随机emoji���随机背景颜色
-      appIcons.forEach((icon) => {
-        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-        icon.textContent = randomEmoji; // 设置图标的内容为随机emoji
-        icon.style.backgroundColor = getRandomColor(); // 设置随机背景颜色
       });
     </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="grid" id="grid">
+        <!-- 个人介绍卡片 -->
+        <div class="card card-large">
+          <div class="avatar-container">
+            <img 
+              src="/path/to/your/avatar.jpg" 
+              alt="头像" 
+              class="avatar"
+              onError="this.src='https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Felix'" <!-- 使用默认头像作为备选 -->
+            <div class="intro-text">
+              <h1 class="intro-title">Hi,I'm Bailey</h1>
+              <p class="intro-subtitle">一名热爱创造的前端开发者</p>
+            </div>
+          </div>
+          <p class="intro-desc">专注于打造美好的用户体验，热爱技术与创新</p>
+        </div>
+
+        <!-- 导航卡片 -->
+        <a href="/navigation" class="card-link">
+          <div class="card card-medium" data-type="navigation">
+            <h2 class="project-title">工具集合</h2>
+            <p class="project-desc">互联网应用导航栏，集合了 Github，AI 工具，设计工具等等</p>
+          </div>
+        </a>
+
+        <!-- 项目卡片 -->
+        <div class="card card-medium">
+          <h2 class="project-title">技能</h2>
+          <p class="project-desc">JavaScript, React, Vue, Node.js</p>
+        </div>
+
+        <!-- 博客卡片 -->
+        <div class="card card-medium">
+          <h2 class="project-title">最新博客</h2>
+          <p class="project-desc">如何使用 Motion 制作流畅的网页动画</p>
+        </div>
+
+        <!-- 音乐卡片 -->
+        <div class="card">
+          <h2 class="project-title">最近在听</h2>
+          <p class="project-desc">Electronic & Dance Music</p>
+        </div>
+
+        <!-- 联系方式卡片 -->
+        <div class="card">
+          <h2 class="project-title">联系我</h2>
+          <p class="project-desc">GitHub · Twitter · Email</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

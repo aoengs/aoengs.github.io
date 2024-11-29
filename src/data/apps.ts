@@ -87,4 +87,11 @@ export const apps = [
     category: "AI",
     desc: "百度出品，AI 聊天机器人",
   },
+  {
+    name: "Koodo Reader",
+    icon: "🎯",
+    url: "https://github.com/koodo-reader/koodo-reader",
+    category: "Github",
+    desc: "开源电子书阅读器",
+  },
 ];

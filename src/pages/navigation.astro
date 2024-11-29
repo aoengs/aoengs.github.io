@@ -1,0 +1,298 @@
+---
+import "../styles/global.css";
+import LaunchpadGrid from "../components/LaunchpadGrid.astro";
+import { apps, categories } from "../data/apps";
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aoengs 启动台</title>
+    <style>
+      /* 跟随鼠标的圆点样式 */
+      .mouse-dot {
+        position: fixed;
+        width: 25px;
+        height: 25px;
+        background-color: rgba(0, 0, 0, 0.05);
+        border-radius: 50%;
+        pointer-events: none; /* 确保圆点不影响鼠标事件 */
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        transition: transform 0.1s ease-out;
+      }
+
+      /* 添加文本居中样式 */
+      .category-list {
+        list-style: none;
+        padding: 10px;
+        text-align: center; /* 确保列表项中的文本居中 */
+      }
+
+      .category-label {
+        display: block; /* 确保标签占据整个行 */
+        margin: 0 auto; /* 自动左右边距以居中 */
+        color: #000000; /* 保持原有颜色 */
+        margin-bottom: 25px;
+        font-size: 18px;
+        padding: 6px;
+        border-radius: 10px;}
+      /* box-shadow: 0 0 10px #1221cb; */
+      /*border-radius: 20px 20px 20px 20px; */
+    </style>
+  </head>
+  <body style="background-color: #F5F8FA;">
+    <div class="app-container">
+      <!-- 左侧搜索框 -->
+      <div class="left-search-box" id="leftSearchBox">
+        <input type="text" placeholder="请输入" id="searchInput" />
+        <span class="search-label" style="font-size: 14px;"> </span>
+      </div>
+
+      <!-- 左侧导航容器 -->
+      <div class="sidebar-wrapper">
+        <nav class="sidebar">
+          <ul class="category-list">
+            <li>
+              <span class="category-label">工具箱</span>
+            </li>
+            {
+              categories.map((category) => (
+                <li>
+                  <button class="category-btn" data-category={category.id}>
+                    {category.name}
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+
+      <div class="main-content">
+        <LaunchpadGrid apps={apps} />
+      </div>
+    </div>
+
+    <!-- 跟随鼠标的圆点 -->
+    <div class="mouse-dot"></div>
+
+    <!-- 右侧小卡片 -->
+    <div class="right-cards">
+      <div class="card" id="card1" style="background-color: #1e0ca2;">
+        <span class="emoji">😀</span>
+        <span class="text" style="color: #fff;">我是导航页</span>
+      </div>
+      <div class="card" id="card2" style="background-color: #1e0ca2;">
+        <span class="emoji">🌟</span>
+        <span class="text" style="color: #fff;">关于我</span>
+      </div>
+      <div class="card" id="scrollToTopCard" style="background-color: #1e0ca2;">
+        <span class="emoji">🚀</span>
+        <span class="text" style="color: #fff;">返回顶部</span>
+      </div>
+    </div>
+
+    <script>
+      // 添加类型断言
+      const searchInput = document.getElementById(
+        "searchInput"
+      ) as HTMLInputElement;
+      const appGrid = document.getElementById("appGrid") as HTMLDivElement;
+      const categoryBtns =
+        document.querySelectorAll<HTMLButtonElement>(".category-btn");
+      const appItems = document.querySelectorAll<HTMLElement>(".app-item");
+      let currentCategory = "all";
+
+      // 分类切换功能
+      categoryBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // 使用可选链和类型断言
+          const category = btn.getAttribute("data-category") || "all";
+          currentCategory = category;
+
+          // 更新按钮状态
+          categoryBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // 显示/隐藏应用
+          appItems.forEach((item) => {
+            const appCategory = item.getAttribute("data-category");
+            if (category === "all" || appCategory === category) {
+              item.style.display = "flex";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      });
+
+      // 搜索功能
+      searchInput?.addEventListener("input", (e) => {
+        const searchTerm = (e.target as HTMLInputElement).value
+          .toLowerCase()
+          .trim();
+
+        appItems.forEach((item) => {
+          const nameElement = item.querySelector(".app-name");
+          const name = nameElement
+            ? nameElement.textContent?.toLowerCase() || ""
+            : "";
+          const category = item.getAttribute("data-category") || "";
+          const matchesSearch = name.includes(searchTerm);
+          const matchesCategory =
+            currentCategory === "all" || category === currentCategory;
+
+          if (matchesSearch && matchesCategory) {
+            item.style.display = "flex";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+
+      // 默认选中"全部应用"
+      const defaultBtn = document.querySelector<HTMLButtonElement>(
+        '[data-category="all"]'
+      );
+      defaultBtn?.classList.add("active");
+
+      const mouseDot = document.querySelector(".mouse-dot");
+
+      document.addEventListener("mousemove", (event) => {
+        mouseDot.style.left = `${event.clientX}px`;
+        mouseDot.style.top = `${event.clientY}px`;
+      });
+
+      document.addEventListener("click", (event) => {
+        const colors = [
+          "#e74c3c",
+          "#8e44ad",
+          "#3498db",
+          "#1abc9c",
+          "#f1c40f",
+          "#e67e22",
+          "#2ecc71",
+        ];
+        const particles = 30; // 粒子数量
+
+        for (let i = 0; i < particles; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          particle.style.left = `${event.clientX}px`;
+          particle.style.top = `${event.clientY}px`;
+          particle.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          // 随机方向和速度
+          const angle = Math.random() * 2 * Math.PI;
+          const distance = Math.random() * 100 + 50; // 粒子爆炸的距离
+          const x = Math.cos(angle) * distance;
+          const y = Math.sin(angle) * distance;
+
+          particle.style.setProperty("--x", `${x}px`);
+          particle.style.setProperty("--y", `${y}px`);
+
+          document.body.appendChild(particle);
+
+          // 动画结束后移除粒子
+          particle.addEventListener("animationend", () => {
+            particle.remove();
+          });
+        }
+      });
+
+      // 确保选择器正确
+      const scrollToTopCard = document.getElementById("scrollToTopCard");
+
+      // 检查是否成功获取到元素
+      if (scrollToTopCard) {
+        scrollToTopCard.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth", // 平滑滚动效果
+          });
+        });
+      } else {
+        console.error('Element with id "scrollToTopCard" not found.');
+      }
+
+      // 为卡片1添加点击事件
+      const card1 = document.getElementById("card1");
+      if (card1) {
+        card1.addEventListener("click", () => {
+          alert("联系方式：186****1616");
+        });
+      }
+
+      // 为卡片2添加点击事件
+      const card2 = document.getElementById("card2");
+      if (card2) {
+        card2.addEventListener("click", () => {
+          window.location.href = "/about"; // 跳转到 about.astro 页面
+        });
+      }
+
+      // 确保选择器正确
+      const blogButton = document.getElementById("blogButton");
+
+      // 检查是否成功获取到元素
+      if (blogButton) {
+        blogButton.addEventListener("click", () => {
+          window.location.href = "/about"; // 跳转到 about.astro 页面
+        });
+      } else {
+        console.error("Blog button not found.");
+      }
+
+      // 定义一组emoji
+      const emojis = [
+        "😀",
+        "🚀",
+        "🌟",
+        "🎨",
+        "🎉",
+        "📚",
+        "💻",
+        "🐶",
+        "🦁",
+        "🦋",
+        "🐱",
+        "🐷",
+        "🐸",
+        "🤡",
+        "🤓",
+        "🤖",
+        "🎯",
+        "✏️",
+        "🖼️",
+        "🎥",
+        "✨",
+        "🦊",
+        "🥳",
+        "🎃",
+      ];
+
+      // 获取所有的app-icon元素
+      const appIcons = document.querySelectorAll(".app-icon");
+
+      // 生成随机颜色的函数
+      function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      // 为每个app-icon设置随机emoji���随机背景颜色
+      appIcons.forEach((icon) => {
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+        icon.textContent = randomEmoji; // 设置图标的内容为随机emoji
+        icon.style.backgroundColor = getRandomColor(); // 设置随机背景颜色
+      });
+    </script>
+  </body>
+</html>
