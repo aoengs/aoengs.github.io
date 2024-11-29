@@ -1,227 +1,160 @@
 ---
-// Astro frontmatter
 ---
-
+<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>小明的空间</title>
+    <title>个人简介</title>
     <style>
-      /* 添加 Safari 兼容性样式 */
       :root {
-        --grid-gap: 1rem;
-        --card-padding: 1.5rem;
+        --primary-color: #2563eb;
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --bg-hover: rgba(37, 99, 235, 0.05);
       }
 
       body {
-        margin: 0;
-        background: #f5f5f5;
+        background: #fafafa;
+        color: var(--text-primary);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
       }
 
       .container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2rem;
-        -webkit-perspective: 1000px;
-        perspective: 1000px;
+        padding: 4rem 2rem;
       }
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: var(--grid-gap);
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
       }
 
       .card {
-        background: #fff;
-        border: 1px solid rgba(0,0,0,0.1);
-        padding: var(--card-padding);
-        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 2rem;
         position: relative;
         overflow: hidden;
-        will-change: transform;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      /* 添加卡片悬浮效果 */
-      .card:hover {
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-      }
-
-      /* 优化文字渲染 */
-      .card h1, .card h2, .card p {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        /* 防止文字抖动 */
-        backface-visibility: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.05);
         transform-style: preserve-3d;
-      }
-
-      /* 添加卡片内容容器 */
-      .card-content {
-        position: relative;
-        z-index: 1;
-        transform: translateZ(0);
+        transform: perspective(1000px);
+        will-change: transform;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
       }
 
       .card-large {
-        grid-column: span 2;
-        grid-row: span 2;
+        grid-column: 1 / -1;
+        padding: 3rem;
       }
 
-      .card-medium {
-        grid-column: span 2;
-      }
-
-      .intro-title {
-        font-size: 2.5rem;
-        margin: 0 0 1rem 0;
-        font-weight: 600;
-      }
-
-      .intro-subtitle {
-        font-size: 1.2rem;
-        color: #666;
-        margin: 0;
-        line-height: 1.6;
-      }
-
-      .project-title {
-        font-size: 1.5rem;
-        margin: 0 0 0.5rem 0;
-      }
-
-      .project-desc {
-        color: #666;
-        margin: 0;
-        line-height: 1.6;
-      }
-
-      .card-link {
-        text-decoration: none;
-        color: inherit;
-        display: contents;
-      }
-
-      /* 头像容器样式 */
       .avatar-container {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        gap: 2.5rem;
+        margin-bottom: 2rem;
+        
       }
 
-      /* 头像样式 */
       .avatar {
-        width: 80px;
-        height: 80px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
-        border: 3px solid #fff; /* 白色内边框 */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         object-fit: cover;
-        margin-right: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 3px solid #fff;
+        
+        box-shadow: 5px 5px 5px rgba(146, 146, 146, 0.5);
       }
 
-      /* 头像悬浮效果 */
-      .avatar:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 4px #0f33bf; /* 悬浮时边框颜色变浅 */
-      }
-
-      /* 文字区域样式 */
       .intro-text {
         flex: 1;
       }
 
       .intro-title {
+        font-size: 2.8rem;
+        font-weight: 700;
         margin: 0;
-        font-size: 1.8rem;
-        font-weight: 600;
+        line-height: 1.2;
+        background: linear-gradient(45deg, var(--primary-color), #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .intro-subtitle {
-        margin: 8px 0 0 0;
-        color: #4a5568;
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin: 0.8rem 0;
+        line-height: 1.6;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .project-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: var(--text-primary);
+      }
+
+      .project-desc {
+        color: var(--text-secondary);
+        line-height: 1.6;
         font-size: 1.1rem;
       }
-    </style>
-    <script type="module">
-      import { animate, spring } from 'https://cdn.skypack.dev/@motionone/dom';
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const cards = document.querySelectorAll('.card');
-        
-        cards.forEach(card => {
-          // 悬浮动画效果
-          card.addEventListener('mouseenter', () => {
-            animate(card, {
-              scale: 1.02,
-              y: -5,
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)'
-            }, {
-              duration: 0.3,
-              easing: spring({ stiffness: 300, damping: 20 })
-            });
-          });
+      .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
 
-          // 移走时立即恢复原状
-          card.addEventListener('mouseleave', () => {
-            animate(card, {
-              scale: 1,
-              y: 0,
-              rotateX: 0,  // 确保旋转角度归零
-              rotateY: 0,  // 确保旋转角度归零
-              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)'
-            }, {
-              duration: 0.3,
-              easing: spring({ stiffness: 400, damping: 30 }) // 增加弹簧刚度和阻尼
-            });
-          });
+      .card-link .card {
+        pointer-events: auto;
+      }
 
-          // 鼠标移动时的倾斜效果
-          card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
 
-            animate(card, {
-              rotateX,
-              rotateY,
-            }, { 
-              duration: 0.1,
-              easing: [0.2, 0.2, 0.2, 1]
-            });
-          });
-        });
+      .social-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
 
-        // 导航卡片特殊处理
-        const navigationCard = document.querySelector('.card[data-type="navigation"]');
-        if (navigationCard) {
-          navigationCard.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = '/navigation';
-          });
+      .social-link:hover {
+        color: var(--primary-color);
+      }
+
+      /* 确保卡片内容不受 3D 变换影响 */
+      .card > * {
+        transform: translateZ(30px);
+        pointer-events: none;
+      }
+
+      /* 优化性能 */
+      @media (prefers-reduced-motion: reduce) {
+        .card {
+          transform: none !important;
+          transition: none !important;
         }
-      });
-    </script>
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <div class="grid" id="grid">
+      <div class="grid">
         <!-- 个人介绍卡片 -->
         <div class="card card-large">
           <div class="avatar-container">
@@ -229,47 +162,135 @@
               src="/path/to/your/avatar.jpg" 
               alt="头像" 
               class="avatar"
-              onError="this.src='https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Felix'" <!-- 使用默认头像作为备选 -->
+              onError="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
+            />
             <div class="intro-text">
-              <h1 class="intro-title">Hi,I'm Bailey</h1>
-              <p class="intro-subtitle">一名热爱创造的前端开发者</p>
+              <h1 class="intro-title">Hi, I'm Bailey</h1>
+              <p class="intro-subtitle">A front-end developer, welcome to my space.</p>
+              <p class="intro-subtitle">email@example.com</p>
             </div>
           </div>
-          <p class="intro-desc">专注于打造美好的用户体验，热爱技术与创新</p>
         </div>
 
-        <!-- 导航卡片 -->
-        <a href="/navigation" class="card-link">
-          <div class="card card-medium" data-type="navigation">
-            <h2 class="project-title">工具集合</h2>
-            <p class="project-desc">互联网应用导航栏，集合了 Github，AI 工具，设计工具等等</p>
+        <!-- 工作项目卡片 -->
+        <a href="/navigation" class="card" style="text-decoration: none;">
+          <h2 class="section-title">Work</h2>
+          <div class="project">
+            <h3 class="project-title">导航工具集</h3>
+            <p class="project-desc">互联网应用导航栏</p>
+            <p class="project-desc">集合了常用工具和资源</p>
           </div>
         </a>
 
-        <!-- 项目卡片 -->
-        <div class="card card-medium">
-          <h2 class="project-title">技能</h2>
-          <p class="project-desc">JavaScript, React, Vue, Node.js</p>
-        </div>
-
-        <!-- 博客卡片 -->
-        <div class="card card-medium">
-          <h2 class="project-title">最新博客</h2>
-          <p class="project-desc">如何使用 Motion 制作流畅的网页动画</p>
-        </div>
-
-        <!-- 音乐卡片 -->
+        <!-- 其他卡片 -->
         <div class="card">
-          <h2 class="project-title">最近在听</h2>
-          <p class="project-desc">Electronic & Dance Music</p>
+          <h2 class="section-title">About</h2>
+          <p class="project-desc">专注于用户体验设计与前端开发</p>
         </div>
 
-        <!-- 联系方式卡片 -->
         <div class="card">
-          <h2 class="project-title">联系我</h2>
-          <p class="project-desc">GitHub · Twitter · Email</p>
+          <h2 class="section-title">Contact</h2>
+          <p class="project-desc">期待与您的合作</p>
+          <p class="project-desc">Email:haofengshang@gmail.com</p>
         </div>
       </div>
     </div>
+
+    <script type="module">
+      import { animate } from 'https://cdn.skypack.dev/@motionone/dom';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+          let isHovering = false;
+          let rafId = null;
+          let currentX = 0;
+          let currentY = 0;
+          let targetX = 0;
+          let targetY = 0;
+          
+          // 减小平滑系数，使动画更平滑
+          const smoothing = 0.08;
+          // 减小旋转幅度
+          const rotationFactor = 12;
+
+          function updateCardTransform() {
+            if (!isHovering) return;
+
+            // 平滑插值
+            currentX += (targetX - currentX) * smoothing;
+            currentY += (targetY - currentY) * smoothing;
+
+            // 限制最大旋转角度
+            const rotateX = Math.max(Math.min(-currentY, 10), -10);
+            const rotateY = Math.max(Math.min(currentX, 10), -10);
+
+            // 应用变换
+            card.style.transform = `
+              perspective(1000px)
+              scale(1.02)
+              translateY(-5px)
+              rotateX(${rotateX}deg)
+              rotateY(${rotateY}deg)
+            `;
+
+            if (isHovering) {
+              rafId = requestAnimationFrame(updateCardTransform);
+            }
+          }
+
+          card.addEventListener('mouseenter', () => {
+            isHovering = true;
+            // 重置当前位置
+            currentX = 0;
+            currentY = 0;
+            targetX = 0;
+            targetY = 0;
+
+            // 开始动画循环
+            rafId = requestAnimationFrame(updateCardTransform);
+
+            // 入场动画
+            animate(card, {
+              scale: 1.02,
+              y: -5,
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
+            }, {
+              duration: 0.4,
+              easing: [0.3, 0.1, 0.3, 1]
+            });
+          });
+
+          card.addEventListener('mousemove', (e) => {
+            if (!isHovering) return;
+
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            // 计算目标旋转角度，使用更小的系数
+            targetX = ((mouseX - centerX) / centerX) * rotationFactor;
+            targetY = ((mouseY - centerY) / centerY) * rotationFactor;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            isHovering = false;
+            cancelAnimationFrame(rafId);
+
+            // 离开时平滑过渡回原始状态
+            animate(card, {
+              transform: 'perspective(1000px) scale(1) translateY(0) rotateX(0deg) rotateY(0deg)',
+              boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)'
+            }, {
+              duration: 0.6,
+              easing: [0.3, 0.1, 0.3, 1]
+            });
+          });
+        });
+      });
+    </script>
   </body>
 </html>
