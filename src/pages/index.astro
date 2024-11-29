@@ -21,9 +21,10 @@
       }
 
       .container {
+        width: 100%;
         max-width: 1200px;
+        padding: 0 1rem;
         margin: 0 auto;
-        padding: 4rem 2rem;
       }
 
       .grid {
@@ -148,6 +149,22 @@
         .card {
           transform: none !important;
           transition: none !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 2rem 0;
+        }
+        
+        .hero-title {
+          font-size: 2rem;
+          line-height: 1.2;
+        }
+
+        .content-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
       }
     </style>
